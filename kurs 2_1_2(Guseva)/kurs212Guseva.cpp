@@ -1,8 +1,4 @@
-// kurs212Guseva.cpp: определяет точку входа для консольного приложения.
-//
-
 #include "stdafx.h"
-#include <locale>
 #include <iostream>
 using namespace std;
 
@@ -18,7 +14,7 @@ List *CreateList(unsigned Length)
 {
 	List *current = 0,
 		*Next = 0;
-	cout << "Input the information about you elements from the end to begin" << endl;
+	cout << "Input the information about your elements from the end to begin" << endl;
 	// Начинаем создавать список с последнего элемента
 	for (unsigned i = 1; i <= Length; ++i)
 	{
@@ -103,7 +99,7 @@ void DelItem(List * &Beg, unsigned Index)
 int main()
 {
 	List *current;
-	cout << "Please input the lenght of the list you want to create " << endl;
+	cout << "Please input the length of the list you want to create " << endl;
 	int n;
 	cin >> n;
 	
