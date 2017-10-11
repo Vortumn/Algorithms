@@ -94,8 +94,7 @@ void DelItem(List * &Beg, unsigned Index)
 	{
 		
 		Item->nextadress = DItem->nextadress; //забиваем в адрес предыдущего адрес следующего за удаляемым
-		List *NextItem = ListItem(Beg, Index + 1, 0); //получаем след элемент
-		NextItem->prevadress = Item; //забиваем ему в адрес предыдущего адрес элемента до
+		DItem->nexadress->prevadress = Item; //забиваем в след элемент указатель на элемент, идущий до удаляемого
 	}
 	else
 	{
