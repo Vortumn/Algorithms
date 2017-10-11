@@ -77,6 +77,7 @@ void DelItem(List * &Beg, unsigned Index)
 		return;
 
 	List *Item;
+
 	if (!Index) //если индекс = 0
 	{
 		Item = Beg->nextadress; //Item - адрес на след элемент
@@ -85,13 +86,20 @@ void DelItem(List * &Beg, unsigned Index)
 		Beg->prevadress = 0;
 		return;
 	}
+
+	
 	Item = ListItem(Beg, Index - 1, 0);  //получение элемента, стоящего раньше нужного
 	List * DItem = Item->nextadress; //получение адреса нужного элемента (для удаления)
-	Item->nextadress = DItem->nextadress; //забиваем в адрес предыдущего адрес следующего за удаляемым
-	if (Item->nextadress != nullptr) //если элемент не последний
+	if (DItem->nextadress != 0)
 	{
+		
+		Item->nextadress = DItem->nextadress; //забиваем в адрес предыдущего адрес следующего за удаляемым
 		List *NextItem = ListItem(Beg, Index + 1, 0); //получаем след элемент
 		NextItem->prevadress = Item; //забиваем ему в адрес предыдущего адрес элемента до
+	}
+	else
+	{
+		Item->nextadress = 0;
 	}
 	delete DItem;
 }
