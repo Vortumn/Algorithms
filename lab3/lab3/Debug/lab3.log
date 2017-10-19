@@ -1,0 +1,4 @@
+﻿  lab3.cpp
+c:\users\vrtmn\source\repos\lab3\lab3\lab3.cpp(127): warning C4715: Tree<int>::FindParent: значение возвращается не при всех путях выполнения
+  lab3.vcxproj -> C:\Users\vrtmn\source\repos\lab3\Debug\lab3.exe
+  lab3.vcxproj -> C:\Users\vrtmn\source\repos\lab3\Debug\lab3.pdb (Partial PDB)
