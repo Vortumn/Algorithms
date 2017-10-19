@@ -1,6 +1,3 @@
-// lab3.cpp: определяет точку входа для консольного приложения.
-//
-
 #include "stdafx.h"
 #include "iostream"
 #include "stack"
@@ -39,11 +36,10 @@ public:
 	Tree() : Root(nullptr), Tree_Size(0) {};
 
 	~Tree() {
-		this->ClearTree(Root);
+		this->ClearTree(Root); 
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	void Add (int key, T value)
+	void Add (int key, T value) //если долго мучиться...
 	{
 		if (Tree_Size == 0) //если дерево пустое, то добавляем корневой элемент
 		{
@@ -85,9 +81,7 @@ public:
 				}
 			}
 		}
-
 	}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	Node<T> *FindNode(int key){ //функция на поиск узла
 			Node <T>* thisone = Root;
@@ -111,7 +105,7 @@ public:
 	}
 
 
-	Node<T> *FindParent(int key)
+	Node<T> *FindParent(int key) //доп функция на удаление
 	{
 		Node <T>* thisone = Root;
 		Node <T>* parent = nullptr;
@@ -164,7 +158,7 @@ public:
 				delete nextone;
 				return;
 			}
-		//случай 3: все потомки в наличие и жаждут власти за престол
+		//случай 3: у правого потомка есть левый потомок
 			else
 			{
 				Node<T>* nextone = itemplace->right;
@@ -174,7 +168,7 @@ public:
 					curr = nextone;
 					nextone = nextone->left;
 				}
-				Node <T>* parent = FindParent(curr->key);
+				Node <T>* parent = FindParent(curr->key); //костыли и велосипеды
 				itemplace->value = curr->value;
 				itemplace->key = curr->key;
 				parent->left = nullptr;
@@ -186,7 +180,7 @@ public:
 		}
 	}
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	void ClearTree(Node<T>* Current) //функция очистки всего дерева (4)
 	{
 		if (!Current)
@@ -202,8 +196,8 @@ public:
 			delete Current;
 		}
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	
 	void ShowTreeSize() //получение количества узлов в дереве (3)
 	{
 		cout << "Tree Size is :" << Tree_Size << endl;
@@ -211,12 +205,11 @@ public:
 		return;
 	}
 
-	Node<T>* GetRoot()
+	Node<T>* GetRoot() //получение ссылки на узел-корень
 	{
 		return Root;
 	}
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	bool IsKeyInTree(int key) //Проверка, есть ли в дереве узел с заданным ключом (7)
 	{
@@ -226,24 +219,23 @@ public:
 		else return false;
 	}
 
-	void IsKeyPrint(int key)
+	void IsKeyPrint(int key) //Функция печати
 	{
 		if (IsKeyInTree(key))
 		{
-			cout << "Yep, dat key in the tree " << endl;
+			cout << "Yep, dat key in a tree " << endl;
 		}
 
 		else {
-			cout << "Nope, dat key is not in the tree " << endl;
+			cout << "Nope, dat key isnt here " << endl;
 		}
 	}
 
 	bool IsValueInTree(T value)
 	{
-		// Обходим в прямом порядке итеративно
 		if (!Root) return false;
 
-		stack<Node<T>*> Stack;
+		stack<Node<T>*> Stack; //дабы не использовать рекурсию
 		Stack.push(Root);
 
 		while (!Stack.empty()) {
@@ -257,7 +249,7 @@ public:
 		return false;
 	}
 
-	void IsValuePrint(T value)
+	void IsValuePrint(T value) //аналогичная функция печати
 	{
 		if (IsValueInTree(value))
 		{
@@ -270,7 +262,6 @@ public:
 			return;
 		}
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	void InOrderPrint(Node<T>* Root, void (*node_func)(Node<T>*)) //вывод дерева в обратном порядке (ЛКП) (8)
 	{
@@ -281,11 +272,10 @@ public:
 			InOrderPrint(Root->right,node_func);//рекурсивный вызов левого поддерева
 	}
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 };
 
 template <typename T>
-void PrintTree(Tree <T>* thisone)
+void PrintTree(Tree <T>* thisone) //функция на печать размеров + вывода ЛКП дерева
 {
 	thisone->ShowTreeSize();
 	thisone->InOrderPrint(thisone->GetRoot(), PrintNode);
@@ -305,13 +295,13 @@ int main()
 	PrintTree(&tree); //вывели дерево (8) с количеством узлов (3)
 	
 	int key;
-	cout << "Input key of the node to del" << endl;
+	cout << "Input key of the node to delete" << endl;
 	cin >> key;
 	tree.DelItem(key); //удалили (2)
 	PrintTree(&tree); //вывели дерево (8) с количеством узлов (3)
 	
 	int val; 
-	cout << "Input the key of node which value you want to see" << endl;
+	cout << "Input the key which value you want to see" << endl;
 	cin >> key;
 	val = tree.GetValue(key); //значение по ключу (5)
 	cout << val;
