@@ -177,7 +177,7 @@ public:
 			Root = z;
 		}
 
-		if (z->left != NIL) //обмен дочерними элементами
+		if (z->left != NIL || z->left != nullptr) //обмен дочерними элементами
 		{
 			p->right = z->left;
 			z->left->parent = p;
