@@ -122,7 +122,7 @@ public:
 				//если речь идёт о левом поддереве, а дядя является правым по отношению к G
 
 				else if (uncle->color == black && uncle == G->right)
-				{
+				{	
 					//случай 3: если datboy - правый потомок
 					if (datboy == datboy->parent->right)
 					{
@@ -259,7 +259,7 @@ public:
 	void Del(int key)
 	{
 		Node <T>* itemplace = FindNode(key);
-		Node <T>* y; //переменная под потомка в некоторых случаях
+		Node <T>* y = NIL; //переменная под потомка в некоторых случаях
 		bool color = itemplace->color; //и цвет (если он черный, то нужно будет восстанавливать свойства дерева)
 		Node <T>* x = NIL; //еще одна доп переменная для потомка потомка (в частности - определяет необходимость фикса)
 
@@ -267,18 +267,11 @@ public:
 		else
 		{
 			Tree_Size--;
-			//случай 1: у удаляемого элемента оба потомка - NIL
-			if (itemplace->right == NIL && itemplace->left == NIL)
-			{
-				if (itemplace->parent->left == itemplace) itemplace->parent->left = NIL; //зануляем у родителя ссылку на удаляемый элемент
-				else if (itemplace->parent->right == itemplace) itemplace->parent->right = NIL; //
-				else Root = NIL; //ну или дерево превращается в NIL
-				delete itemplace;
-			}
 			//случай 2: у удаляемого элемента нет левого или правого потомка
-			else if (itemplace->right == NIL || itemplace->left == NIL)
+			if (itemplace->right == NIL || itemplace->left == NIL)
 			{
 				y = (itemplace->left == NIL) ? itemplace->right : itemplace->left; //находим непустого ребенка
+				x = y;
 				Swap(itemplace, y);
 				//так как ссылка на ребенка изменена, то можно просто удалить текущий элемент
 				delete itemplace;
@@ -305,7 +298,7 @@ public:
 					y = x;
 					x = x->left;
 				}
-
+				if (y->color == red) color = red;
 				x = y->right; //меняем значение переменной x, использовавшейся ранее как расходный материал поиска минимума
 				y->parent->left = x; //переприсваиваем родительские функции левому ребенку y
 				x->parent = y->parent;
@@ -313,6 +306,7 @@ public:
 				itemplace->right->parent = y;
 				y->left = itemplace->left; //меняем детишек у y
 				y->right = itemplace->right;
+				if (itemplace == Root) y->color = black;
 				Swap(itemplace, y); //меняем родителей
 				delete itemplace;
 			}
@@ -327,7 +321,7 @@ public:
 	void FixDelBalance(Node<T> *x)
 	{
 		Node <T>* w; //переменная под дядю
-		while (x != NIL && x->color == black)
+		while (x != Root && x->color == black)
 		{
 			//определяем переменную дяди
 			w = (x == x->parent->left) ? x->parent->right : x->parent->left;
@@ -477,23 +471,23 @@ int main()
 
 	PrintTree(&tree);
 
-	cout << "Add someone new" << endl;
-	cin >> k;
-	tree.Add(k, k + 2);
-	cout << "----------------------------------------------------------" << endl;
-	PrintTree(&tree);
+	//cout << "Add someone new" << endl;
+	//cin >> k;
+	//tree.Add(k, k + 2);
+	//cout << "----------------------------------------------------------" << endl;
+	//PrintTree(&tree);
 
-	cout << "Add someone new" << endl;
-	cin >> k;
-	tree.Add(k, k + 2);
-	cout << "----------------------------------------------------------" << endl;
-	PrintTree(&tree);
+	//cout << "Add someone new" << endl;
+	//cin >> k;
+	//tree.Add(k, k + 2);
+	//cout << "----------------------------------------------------------" << endl;
+	//PrintTree(&tree);
 
-	cout << "Add someone new" << endl;
-	cin >> k;
-	tree.Add(k, k + 2);
-	cout << "----------------------------------------------------------" << endl;
-	PrintTree(&tree);
+	//cout << "Add someone new" << endl;
+	//cin >> k;
+	//tree.Add(k, k + 2);
+	//cout << "----------------------------------------------------------" << endl;
+	//PrintTree(&tree);
 
 
 	cout << "Delete someone" << endl;
